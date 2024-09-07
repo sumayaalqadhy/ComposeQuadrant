@@ -4,18 +4,25 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.app.RemoteInput.Source
+import androidx.compose.ui.unit.dp
 import com.example.composequadrant.ui.theme.ComposeQuadrantTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,7 +32,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeQuadrantTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     ComposeQuadrantApp ()
                 }
@@ -36,68 +44,75 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ComposeQuadrantApp() {
-    ComposeQuadrant(
-        quadOneTitle = stringResource(R.string.quad_one_title),
-        quadOneText = stringResource(R.string.quad_one_text),
-        quadTwoTitle = stringResource(R.string.quad_two_title),
-        quadTwoText = stringResource(R.string.quad_two_text),
-        quadThreeTitle = stringResource(R.string.quad_three_title),
-        quadThreeText = stringResource(R.string.quad_three_text),
-        quadFourTitle = stringResource(R.string.quad_four_title),
-        quadFourText = stringResource(R.string.quad_four_text)
-    )
+    Column(
+        Modifier.fillMaxWidth(),
+    ) {
+        Row(Modifier.weight(1f)) {
+            ComposeInfoCard(
+                title = stringResource(R.string.quad_one_title),
+                description = stringResource(R.string.quad_one_text),
+                backgroundColor = Color(0xFFEADDFF),
+                modifier = Modifier.weight(1f)
+            )
+            ComposeInfoCard(
+                title = stringResource(R.string.quad_two_title),
+                description = stringResource(R.string.quad_two_text),
+                backgroundColor = Color(0xFFD0BCFF),
+                modifier = Modifier.weight(1f)
+                )
+
+        }
+
+        Row(Modifier.weight(1f)) {
+            ComposeInfoCard(
+                title = stringResource(R.string.quad_three_title),
+                description = stringResource(R.string.quad_three_text),
+                backgroundColor = Color(0xFFB69DF8),
+                modifier = Modifier.weight(1f)
+            )
+            ComposeInfoCard(
+                title = stringResource(R.string.quad_four_title),
+                description = stringResource(R.string.quad_four_text),
+                backgroundColor = Color(0xFFF6EDFF),
+                modifier = Modifier.weight(1f)
+            )
+
+
+        }
+    }
+
 }
 
 @Composable
-fun ComposeQuadrant(
-    quadOneTitle: String,
-    quadOneText: String,
-    quadTwoTitle: String,
-    quadTwoText: String,
-    quadThreeTitle: String,
-    quadThreeText: String,
-    quadFourTitle: String,
-    quadFourText: String,
-    modifier: Modifier = Modifier) {
-    Box(
-
-        modifier = Modifier
-            .fillMaxSize()
+fun ComposeInfoCard(
+    title: String,
+    description: String,
+    backgroundColor: Color,
+    modifier: Modifier = Modifier
     ) {
-        Text(
-            text = quadOneTitle,
-            modifier = modifier
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(backgroundColor),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text (
+            text = title,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(bottom = 16.dp)
         )
+
         Text(
-            text = quadOneText,
-            modifier = modifier
+            text = description,
+            textAlign = TextAlign.Justify
         )
-        Text(
-            text = quadTwoTitle,
-            modifier = modifier
-        )
-        Text(
-            text = quadTwoText,
-            modifier = modifier
-        )
-        Text(
-            text = quadThreeTitle,
-            modifier = modifier
-        )
-        Text(
-            text = quadThreeText,
-            modifier = modifier
-        )
-        Text(
-            text = quadFourTitle,
-            modifier = modifier
-        )
-        Text(
-            text = quadFourText,
-            modifier = modifier
-        )
+
     }
+
 }
+
 
 @Preview(showBackground = true)
 @Composable
